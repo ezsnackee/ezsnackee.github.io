@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ezsnackee</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- อัปเดต Bootstrap เป็นเวอร์ชันล่าสุด -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <!-- ใช้ Font Awesome สำหรับไอคอน -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ใช้ Google Fonts สำหรับตัวอักษรที่สวยงาม -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- CSS กำหนดเอง -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #f0f0f0 0%, #ffffff 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            margin-right: 20px;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+        }
+
+        .dropdown-menu {
+            border-radius: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            color: #333;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: #f0f0f0;
+        }
+
+        .hero-section {
+            background: url("{% static 'images/your-image.jpg' %}") center center/cover no-repeat;
+            color: #fff;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: -1;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-custom {
+            border-radius: 30px;
+            padding: 0.6rem 1.5rem;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        .container {
+            padding: 2rem 0;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 30px;
+        }
+
+        /* ลูกเล่นการเคลื่อนไหว */
+        .navbar-nav .nav-item {
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ปรับแต่งข้อความต้อนรับ */
+        .welcome-text {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 1rem;
+        }
+
+        /* ปรับแต่งโปรไฟล์ผู้ใช้ */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            color: #333;
+        }
+
+        .user-profile img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* ปุ่มเลื่อนกลับขึ้นบน */
+        #scrollTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 0.75rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background 0.3s ease;
+        }
+
+        #scrollTop:hover {
+            background: #0056b3;
+        }
+    </style>
+    <!-- โหลดไฟล์สแตติก -->
+    {% load static %}
+</head>
+<body>
+
+<!-- ปุ่มเลื่อนกลับขึ้นบน -->
+<button id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home-page' %}">EzsnackeeFI</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about-page' %}">เกี่ยวกับเรา</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact-page' %}">ติดต่อเรา</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'allproduct-page' %}">สินค้าทั้งหมด</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">ประเภทสินค้า</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="#">ขนมขบเคี้ยว</a></li>
+              <li><a class="dropdown-item" href="#">เครื่องดื่ม</a></li>
+              <li><a class="dropdown-item" href="#">ของหวาน</a></li>
+            </ul>
+          </li>
+
+          {% if user.is_authenticated and user.profile.usertype == 'member' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mycart-page' %}"><i class="fas fa-shopping-cart"></i> ตะกร้า <span class="badge bg-warning text-dark">{{user.profile.cartquan}}</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'orderlist-page' %}"><i class="fas fa-list"></i> รายการสั่งซื้อ</a>
+          </li>
+          {% endif %}
+
+          {% if user.is_authenticated and user.profile.usertype == 'admin' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'addproduct-page' %}"><i class="fas fa-plus-circle"></i> เพิ่มสินค้า</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'allorderlist-page' %}"><i class="fas fa-clipboard-list"></i> รายการสั่งซื้อทั้งหมด</a>
+          </li>
+          {% endif %}
+        </ul>
+        {% if user.is_authenticated %}
+            <div class="user-profile ms-lg-3">
+                <img src="{{user.profile.photo.url}}" width="40" height="40">
+                <span>สวัสดี, {{user.first_name}} {{user.last_name}}</span>
+                <a class="btn btn-outline-secondary ms-3" href="{% url 'logout' %}">ออกจากระบบ</a>
+            </div>
+        {% else %}
+            <a class="btn btn-primary ms-lg-3" href="{% url 'register-page' %}">สมัครสมาชิก</a>
+            <a class="btn btn-secondary ms-2" href="{% url 'login' %}">เข้าสู่ระบบ</a>
+        {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="hero-section">
+	<br>
+	<br>
+	<br>
+    <h1>ezsnackee</h1>
+    <p class="welcome-text">ยินดีต้อนรับสู่ร้านขนมออนไลน์ที่ดีที่สุด</p>
+    <a href="{% url 'allproduct-page' %}" class="btn btn-custom">ช้อปเลย</a>
+</div>
+
+<div class="container">
+
+{% if user.is_authenticated %}
+
+    {% if user.verifyemail.approved == False %}
+    <br>
+    <div class="alert alert-warning d-flex align-items-center p-4" style="border-radius: 10px;">
+        <i class="fas fa-exclamation-triangle me-2" style="font-size: 1.5rem;"></i>
+        <div>
+            <strong>แจ้งเตือน!</strong> กรุณาตรวจยืนยันอีเมลของคุณ!
+        </div>
+    </div>
+    {% endif %}
+
+{% endif %}
+
+    {% block content %}
+    {% endblock content %}
+</div>
+
+<footer>
+    <p>© 2024 Ezsnackee. สงวนลิขสิทธิ์ทั้งหมด.</p>
+</footer>
+
+<!-- JavaScript กำหนดเอง -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ปุ่มเลื่อนกลับขึ้นบน
+    window.addEventListener('scroll', function() {
+        const scrollTopButton = document.getElementById('scrollTop');
+        if (window.pageYOffset > 200) {
+            scrollTopButton.style.display = 'block';
+        } else {
+            scrollTopButton.style.display = 'none';
+        }
+    });
+
+    document.getElementById('scrollTop').addEventListener('click', function() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+</script>
+
+</body>
+</html>
